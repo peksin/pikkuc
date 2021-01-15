@@ -1,6 +1,7 @@
 module Main where
 
 -- this works as a repl for now
+-- https://www.stephendiehl.com/llvm/
 
 import Lib
 
