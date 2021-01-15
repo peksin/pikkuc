@@ -21,9 +21,16 @@ description:         Please see the README on GitHub at <https://github.com/gith
 
 dependencies:
 - base >= 4.7 && < 5
-- parsec
+- hspec
+- hspec-megaparsec
+- megaparsec
+- text
+- parser-combinators
 - mtl
 - haskeline
+- llvm-hs-pure
+- containers
+- bytestring
 
 library:
   source-dirs: src

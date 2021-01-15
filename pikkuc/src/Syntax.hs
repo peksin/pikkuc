@@ -3,12 +3,14 @@ module Syntax where
 type Name = String
 
 data Expr
-  = Float Double
-  | BinOp Op Expr Expr
-  | Var String
-  | Call Name [Expr]
+  = Float    Double
+  | Int      Int
+  | BinOp    Op Expr Expr
+  | Var      String
+  | Negation Expr
+  | Call     Name [Expr]
   | Function Name [Expr] Expr
-  | Extern Name [Expr]
+  | Extern   Name [Expr]
   deriving (Eq, Ord, Show)
 
 data Op
