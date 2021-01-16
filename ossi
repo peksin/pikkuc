@@ -1,0 +1,9 @@
+// testisofta
+/* kokeillaan skippaako kommentit */
+char x;
+
+
+int oss (int x, int y) {
+  int x;
+  x = 2 + 1;
+}

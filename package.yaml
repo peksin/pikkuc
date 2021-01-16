@@ -1,10 +1,10 @@
 name:                pikkuc
 version:             0.1.0.0
-github:              "githubuser/pikkuc"
-license:             BSD3
-author:              "Author name here"
-maintainer:          "example@example.com"
-copyright:           "2021 Author name here"
+github:              "peksin/pikkuc"
+license:             MIT
+author:              "Pekka Sinkkonen"
+maintainer:          "peksin@protonmail.com"
+copyright:           "2021 Pekka Sinkkonen"
 
 extra-source-files:
 - README.md
@@ -17,23 +17,34 @@ extra-source-files:
 # To avoid duplicated efforts in documentation and dealing with the
 # complications of embedding Haddock markup inside cabal files, it is
 # common to point users to the README.md file.
-description:         Please see the README on GitHub at <https://github.com/githubuser/pikkuc#readme>
+description:         Please see the README on GitHub at <https://github.com/peksin/pikkuc#readme>
 
 dependencies:
 - base >= 4.7 && < 5
+- mtl
+- array
+- containers
+- text
+- string-conversions
+- directory
+- process
+- unix
+- filepath
+- bytestring
+- prettyprinter
+- llvm-hs-pure
+- llvm-hs-pretty
+- megaparsec
+- parser-combinators
+- optparse-applicative
 - hspec
 - hspec-megaparsec
-- megaparsec
-- text
-- parser-combinators
-- mtl
-- haskeline
-- llvm-hs-pure
-- containers
-- bytestring
 
 library:
   source-dirs: src
+  default-extensions:
+    - OverloadedStrings
+    - LambdaCase
 
 executables:
   pikkuc-exe:
@@ -47,12 +58,15 @@ executables:
     - pikkuc
 
 tests:
-  pikkuc-test:
+  pikkuc-unit-tests:
     main:                Spec.hs
-    source-dirs:         test
+    source-dirs:         test/unit
     ghc-options:
     - -threaded
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
     - pikkuc
+    - hspec-discover
+    default-extensions:
+      - OverloadedStrings
