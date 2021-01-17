@@ -11,13 +11,27 @@ import qualified Text.Megaparsec.Char.Lexer as L
 import           Control.Monad
 import           Data.String.Conversions
 
+{- 
+"the best way to start writing a parser with megaparsec 
+is to define a custom type synonym for your parser"
+There's a possibility to use a custom error type here
+but we just define it as Void and input stream type
+as Text. This type synonym saves us the trouble of
+defining the same thing for every single parser we make.
+This makes type Parser have kind '* -> *' which is much
+cleaner
+-}
+
 type Parser = Parsec Void Text
 
--- space consumer for skipping whitespace and c-style comments
+{- 
+Space consumer for skipping whitespace and c-style comments.
+Picks up whitespace and doesn't accept empty so L.space 
+doesn't go into an infinite loop.
+We don't care about indentation in pikkuc.
+-}
 sc :: Parser ()
 sc = L.space
--- picks up whitespace and doesn't accept empty
--- so L.space doesn't go into an infinite loop
   space1 
   (L.skipLineComment "//")
   (L.skipBlockComment "/*" "*/")
@@ -81,10 +95,12 @@ stringLiteral = do
   content <- dquotes $ takeWhileP Nothing (/= '"')
   pure $ T.pack (read ('"' : cs content ++ "\""))
 
--- ord converts ascii char to its integer representation
--- first choice doesn't have a backslash or semicolon in it
--- second choice has a backslash, in which case we expect
--- an ASCII code for a character
+{-
+ord converts ascii char to its integer representation
+first choice doesn't have a backslash or semicolon in it
+second choice has a backslash, in which case we expect
+an ASCII code for a character
+-}
 charLiteral :: Parser Int
 charLiteral =
   squotes $ (ord <$> satisfy (`notElem` ['\\', '\'']))

@@ -1,2 +1,8 @@
 declarations and assignments simultaneously
 String datatype
+
+Optimize parsers according to megaparsecs readme
+https://hackage.haskell.org/package/megaparsec-9.0.1#readme
+
+add labels if needed to megaparsec code as seen in mark karpov's
+tutorial

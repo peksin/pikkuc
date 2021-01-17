@@ -27,7 +27,7 @@ data Expr
   = Literal Int
   | StrLit Text
   | CharLit Int       -- chars reduce to ints in codegen
-  | Fliteral Double
+  | FloatLiteral Double
   | BoolLit Bool
   | Null
   | Id Text           -- variable names
@@ -35,7 +35,7 @@ data Expr
   | Unop Uop Expr
   | Call Text [Expr]
   | Assign Expr Expr
-  | Noexpr -- for dangling ifs
+  | Noexpr
   deriving (Eq, Show)
 
 data Statement 
@@ -112,7 +112,7 @@ instance Pretty Function where
 instance Pretty Expr where
   pretty = \case
     Literal i -> pretty i
-    Fliteral f -> pretty f
+    FloatLiteral f -> pretty f
     CharLit c -> squotes $ pretty (chr c)
     StrLit s -> dquotes $ pretty s
     BoolLit b -> if b then "true" else "false"
