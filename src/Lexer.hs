@@ -53,9 +53,6 @@ semi = void $ symbol ";"
 comma :: Parser ()
 comma = void $ symbol ","
 
-star :: Parser ()
-star = void $ symbol "*"
-
 -------------------------------
 -- reserved words
 -------------------------------
