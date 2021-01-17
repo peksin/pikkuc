@@ -78,5 +78,5 @@ pFormals = parens $ pFormal `sepBy` comma
 
 pProgram :: Parser Program
 pProgram = between sc eof $ do
-  globals <- many $ try pVarDec -- without try infinite loop of parsing vars!
+  globals <- many $ try pVarDec -- without try -> infinite loop of parsing vars!
   Program globals <$> many pFuncDec
