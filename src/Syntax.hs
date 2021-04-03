@@ -24,26 +24,27 @@ data Uop = Neg
          deriving (Show, Eq)
 
 data Expr
-  = Literal Int
-  | StrLit Text
-  | CharLit Int       -- chars reduce to ints in codegen
+  = Literal      Int
+  | StrLit       Text
+  | CharLit      Int       -- chars reduce to ints in codegen
   | FloatLiteral Double
-  | BoolLit Bool
+  | BoolLit      Bool
   | Null
-  | Id Text           -- variable names
-  | Binop Op Expr Expr
-  | Unop Uop Expr
-  | Call Text [Expr]
-  | Assign Expr Expr
+  | Id           Text      -- variable names
+  | Binop        Op Expr Expr
+  | Unop         Uop Expr
+  | Call         Text [Expr]
+  | Cast         Type Expr
+  | Assign       Expr Expr
   | Noexpr
   deriving (Eq, Show)
 
 data Statement 
-  = Expr Expr
+  = Expr   Expr
   | Block [Statement]
   | Return Expr
-  | If Expr Statement Statement
-  | While Expr Statement
+  | If     Expr Statement Statement
+  | While  Expr Statement
   deriving (Show, Eq)
             
 data Type
@@ -51,18 +52,21 @@ data Type
   | TyFloat
   | TyChar
   | TyBool
+  | TyVoid
+  | TyString
   deriving (Show, Eq)
 
 data Bind = Bind { bindType :: Type, bindName :: Text } 
   deriving (Show, Eq)
 
+-- we'll use this later
 data Struct = Struct { structName :: Text, structFields :: [Bind] }
   deriving (Show, Eq)
 
 data Function = Function
   { typ  :: Type
   , name :: Text
-  , formals :: [Bind]
+  , funcargs :: [Bind]
   , locals :: [Bind]
   , body :: [Statement]
   }
@@ -80,6 +84,7 @@ instance Pretty Type where
     TyFloat -> "float"
     TyChar -> "char"
     TyBool -> "bool"
+    TyVoid -> "void"
 
 instance Pretty Op where
   pretty = \case
@@ -103,8 +108,8 @@ instance Pretty Bind where
   pretty (Bind ty nm) = pretty ty <+> pretty nm
 
 instance Pretty Function where
-  pretty (Function typ name formals locals body) =
-    pretty typ <+> pretty name <> tupled (map pretty formals)
+  pretty (Function typ name funcargs locals body) =
+    pretty typ <+> pretty name <> tupled (map pretty funcargs)
     <> hardline <> lbrace <> hardline <>
     indent 4 (hardsep (map decl locals ++ map pretty body))
     <> hardline <> rbrace <> hardline

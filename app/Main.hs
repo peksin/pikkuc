@@ -12,7 +12,7 @@ import           LLVM.Pretty
 import           Data.String.Conversions
 import qualified Data.Text as T
 import qualified Data.Text.IO as T
--- import           Text.Pretty.Simple
+import           Text.Pretty.Simple
 import           Data.Text.Prettyprint.Doc.Internal
 -- import           Prettyprinter.Internal
 import           Data.Text.Prettyprint.Doc.Render.Text
@@ -58,36 +58,8 @@ runOpts (Options action infile) = do
     Left  err -> putStrLn $ errorBundlePretty err
     Right ast -> case action of
       Ast -> putDoc $ pretty ast <> pretty (T.pack "\n")
-      _   -> error "Not yet implemented"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
--- import Lib
-
--- import Parser
-
--- import Control.Monad.Trans
--- import System.Console.Haskeline
-
-
-
--- main :: IO ()
--- main = putStrLn "Hi gaiz"
+      _   -> case checkProgram ast of
+        Left err -> putDoc $ pretty err <> pretty (T.pack "\n")
+        Right sast -> case action of
+          Sast -> pPrint sast
+          _    -> error "No codegen available yet"

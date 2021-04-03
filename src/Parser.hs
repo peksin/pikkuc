@@ -103,17 +103,22 @@ pWhile = liftA2 While (rword "while" *> parens pExpr) pStatement
 
 -- function declaration
 pFuncDec :: Parser Function
-pFuncDec = Function <$> pType <*> identifier <*> pFormals
+pFuncDec = Function <$> pType <*> identifier <*> pFuncArgs
   <*> (symbol "{" *> many pVarDec)
   <*> (many pStatement <* symbol "}")
 
+-- parse function arguments
+pFuncArgs :: Parser [Bind]
+pFuncArgs = parens $ pFuncArg `sepBy` comma
+  where pFuncArg = liftA2 Bind pType identifier 
 
-pFormals :: Parser [Bind]
-pFormals = parens $ pFormal `sepBy` comma
-  where pFormal = liftA2 Bind pType identifier 
 
-
+{-
+Global variable declarations need to be parsed with try (enable
+backtracking), since they share the beginning (type declaration) 
+with function declarations.
+-}
 pProgram :: Parser Program
 pProgram = between sc eof $ do
-  globals <- many $ try pVarDec -- without try -> infinite loop of parsing vars!
+  globals <- many $ try pVarDec
   Program globals <$> many pFuncDec

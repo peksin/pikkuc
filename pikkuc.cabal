@@ -29,6 +29,10 @@ library
       Lib
       Parser
       Pikkuc
+      SemantAnalysis
+      SemantChk
+      SemantChkError
+      SemChkSyntax
       Syntax
   other-modules:
       Paths_pikkuc
@@ -52,6 +56,7 @@ library
     , mtl
     , optparse-applicative
     , parser-combinators
+    , pretty-simple
     , prettyprinter
     , process
     , string-conversions
@@ -82,6 +87,7 @@ executable pikkuc-exe
     , optparse-applicative
     , parser-combinators
     , pikkuc
+    , pretty-simple
     , prettyprinter
     , process
     , string-conversions
@@ -118,6 +124,7 @@ test-suite pikkuc-unit-tests
     , optparse-applicative
     , parser-combinators
     , pikkuc
+    , pretty-simple
     , prettyprinter
     , process
     , string-conversions
