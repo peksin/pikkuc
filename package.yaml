@@ -39,6 +39,7 @@ dependencies:
 - optparse-applicative
 - hspec
 - hspec-megaparsec
+- pretty-simple
 
 library:
   source-dirs: src

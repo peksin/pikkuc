@@ -1,6 +1,6 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.34.3.
+-- This file has been generated from package.yaml by hpack version 0.34.4.
 --
 -- see: https://github.com/sol/hpack
 
@@ -29,12 +29,18 @@ library
       Lib
       Parser
       Pikkuc
+      SemantAnalysis
+      SemantChk
+      SemantChkError
+      SemChkSyntax
       Syntax
   other-modules:
       Paths_pikkuc
   hs-source-dirs:
       src
-  default-extensions: OverloadedStrings LambdaCase
+  default-extensions:
+      OverloadedStrings
+      LambdaCase
   build-depends:
       array
     , base >=4.7 && <5
@@ -50,6 +56,7 @@ library
     , mtl
     , optparse-applicative
     , parser-combinators
+    , pretty-simple
     , prettyprinter
     , process
     , string-conversions
@@ -80,6 +87,7 @@ executable pikkuc-exe
     , optparse-applicative
     , parser-combinators
     , pikkuc
+    , pretty-simple
     , prettyprinter
     , process
     , string-conversions
@@ -96,7 +104,8 @@ test-suite pikkuc-unit-tests
       Paths_pikkuc
   hs-source-dirs:
       test/unit
-  default-extensions: OverloadedStrings
+  default-extensions:
+      OverloadedStrings
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       array
@@ -115,6 +124,7 @@ test-suite pikkuc-unit-tests
     , optparse-applicative
     , parser-combinators
     , pikkuc
+    , pretty-simple
     , prettyprinter
     , process
     , string-conversions
